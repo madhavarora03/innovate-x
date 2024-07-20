@@ -1,25 +1,15 @@
-import { MoonIcon, SunIcon } from "lucide-react";
-import { switchTheme } from "./utils/slices/themeSlice";
-import { useDispatch, useSelector } from "react-redux";
-function App() {
-  const theme = useSelector((state) => state.themeReducer.value);
-  const dispatch = useDispatch();
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+
+const App = () => {
   return (
-    <h1 className="text-slate-700">
-      <div>Hello!</div>
-      <button className="btn btn-primary">Button</button>
-      <div className="flex gap-2">
-        <SunIcon />
-        <input
-          type="checkbox"
-          className="toggle"
-          checked={theme === "dim"}
-          onClick={() => dispatch(switchTheme())}
-        />
-        <MoonIcon />
-      </div>
-    </h1>
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </>
   );
-}
+};
 
 export default App;
