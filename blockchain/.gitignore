@@ -1,0 +1,61 @@
+# Node modules
+node_modules/
+
+# Truffle build directory
+build/
+
+# Truffle configuration files
+.truffle/
+truffle.js
+
+# dotenv environment variables file
+.env
+
+# MacOS system files
+.DS_Store
+
+# Log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Coverage files
+coverage/
+coverage.json
+lcov-report/
+lcov.info
+
+# Ethereum artifacts and keys
+*.json
+!package*.json
+*.key
+*.pid
+
+# Solidity tests
+tests/
+
+# Hardhat artifacts
+artifacts/
+cache/
+
+# Binaries
+*.bin
+
+# Secret files
+*.secret
+
+# VS Code settings
+.vscode/
