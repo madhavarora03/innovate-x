@@ -67,7 +67,7 @@ function Header() {
             />
             <MoonIcon />
           </div>
-          <div className="dropdown dropdown-end">
+          {/* <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -100,7 +100,8 @@ function Header() {
                 <a>Logout</a>
               </li>
             </ul>
-          </div>
+          </div> */}
+          <button className=" btn btn-ghost btn-outline">Log In</button>
         </div>
       </div>
     </header>

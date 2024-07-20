@@ -1,9 +1,11 @@
 /* components/ImageSlider.css */
 .slider {
+  margin-top: 3%;
+  margin-bottom: 3%;
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 50vh; /* Adjust to desired height */
+  height: 70vh; /* Adjust to desired height */
 }
 
 .slider-images {

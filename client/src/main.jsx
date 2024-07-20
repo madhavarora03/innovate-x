@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./utils/store.js";
 import App from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
-import CartPage from "./pages/CartPage.jsx";
+import CartPage from "./pages/CartPage2.jsx";
 import Board from "./pages/Board.jsx";
 // import Contact from "./Contact.jsx";
 import "./index.css";
