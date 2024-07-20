@@ -15,7 +15,6 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true
   },
   stock: {
     type: Number,
@@ -24,7 +23,7 @@ const productSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
-    required: true
+    default : "https://img.freepik.com/free-psd/3d-icon-social-media-app_23-2150049569.jpg?w=1380&t=st=1721482016~exp=1721482616~hmac=181e5197d41af72b5068dfc9c7ff59d14117144900c587b8582bb915eba5de83"
   },
   createdAt: {
     type: Date,
