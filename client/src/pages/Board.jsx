@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Profile from "../components/Profile";
 import { Leaderboard } from "../components/Database";
 import "../components/style1.css";

@@ -1,4 +1,3 @@
-import React from "react";
 import "./style1.css";
 export default function profiles({ Leaderboard }) {
   return <div id="profile">{Item(Leaderboard)}</div>;
