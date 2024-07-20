@@ -1,0 +1,31 @@
+# Flask specific
+__pycache__/
+instance/
+.webassets-cache
+
+# Environment variables
+.env
+
+# IDE specific
+.vscode/
+.idea/
+
+# Compiled Python files
+*.pyc
+
+# Logs
+*.log
+
+# Virtual environment
+venv/
+
+# Database
+db.sqlite3
+
+# Other
+*.swp
+*.swo
+.DS_Store
+
+config.py
+.venv
