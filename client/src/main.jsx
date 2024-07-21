@@ -55,7 +55,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/" index element={<HomePage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/board" element={<Board />} />
+<<<<<<< HEAD
             <Route path="/lp" element={<Page />} />
+=======
+<<<<<<< Updated upstream
+=======
+            <Route path="/landing" element={<Page />} />
+>>>>>>> Stashed changes
+>>>>>>> 3e5786b (Update main.jsx)
           </Route>
         </Routes>
       </BrowserRouter>
