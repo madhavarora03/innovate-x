@@ -9,6 +9,7 @@ import CartPage from "./pages/CartPage2.jsx";
 import Board from "./pages/Board.jsx";
 // import Contact from "./Contact.jsx";
 import "./index.css";
+import Page from "./pages/Page.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/" index element={<HomePage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/board" element={<Board />} />
+            <Route path="/lp" element={<Page />} />
           </Route>
         </Routes>
       </BrowserRouter>
