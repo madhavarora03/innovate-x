@@ -17,6 +17,7 @@ import SignInScreen from "./routes/SignIn/index.jsx";
 import ProductScreen from "./routes/ProductScreen";
 // import Contact from "./Contact.jsx";
 import "./index.css";
+<<<<<<< HEAD
 import AdminPanel from "./components/AdminPanel.jsx";
 
 const router = createBrowserRouter(
@@ -38,11 +39,27 @@ const router = createBrowserRouter(
     </Route>
   )
 );
+=======
+import Page from "./pages/Page.jsx";
+>>>>>>> ec0a080 (added landing page)
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
+<<<<<<< HEAD
       <RouterProvider router={router} />
+=======
+      <BrowserRouter>
+        <Routes>
+          <Route element={<App />}>
+            <Route path="/" index element={<HomePage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/board" element={<Board />} />
+            <Route path="/lp" element={<Page />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+>>>>>>> ec0a080 (added landing page)
     </Provider>
   </React.StrictMode>
 );
