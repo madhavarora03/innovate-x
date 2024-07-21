@@ -1,15 +1,17 @@
-import express from 'express';
-import Review from '../models/review.model.js'; // Adjust the path as needed
-import { authenticateToken, checkAdmin } from './auth.middleware.js'; // Adjust the path as needed
+import express from "express";
+import Review from "../models/review.model.js"; // Adjust the path as needed
+import { authenticateToken, checkAdmin } from "./auth.middleware.js"; // Adjust the path as needed
 
 const router = express.Router();
 
 // Create a new review
-router.post('/', authenticateToken, async (req, res) => {
+router.post("/", authenticateToken, async (req, res) => {
   const { productId, rating, comment } = req.body;
 
   if (!productId || !rating) {
-    return res.status(400).json({ message: 'Product ID and rating are required' });
+    return res
+      .status(400)
+      .json({ message: "Product ID and rating are required" });
   }
 
   try {
@@ -17,22 +19,25 @@ router.post('/', authenticateToken, async (req, res) => {
       user: req.user.id,
       product: productId,
       rating,
-      comment
+      comment,
     });
 
     await review.save();
-    res.status(201).json({ message: 'Review created successfully', review });
+    res.status(201).json({ message: "Review created successfully", review });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 // Get all reviews for a product
-router.get('/product/:productId', async (req, res) => {
+router.get("/product/:productId", async (req, res) => {
   const { productId } = req.params;
 
   try {
-    const reviews = await Review.find({ product: productId }).populate('user', 'name');
+    const reviews = await Review.find({ product: productId }).populate(
+      "user",
+      "name"
+    );
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -40,7 +45,7 @@ router.get('/product/:productId', async (req, res) => {
 });
 
 // Update a review
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put("/:id", authenticateToken, async (req, res) => {
   const { rating, comment } = req.body;
   const { id } = req.params;
 
@@ -48,58 +53,62 @@ router.put('/:id', authenticateToken, async (req, res) => {
     const review = await Review.findById(id);
 
     if (!review) {
-      return res.status(404).json({ message: 'Review not found' });
+      return res.status(404).json({ message: "Review not found" });
     }
 
     if (review.user.toString() !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied. You cannot edit this review.' });
+      return res
+        .status(403)
+        .json({ message: "Access denied. You cannot edit this review." });
     }
 
     review.rating = rating || review.rating;
     review.comment = comment || review.comment;
 
     await review.save();
-    res.json({ message: 'Review updated successfully', review });
+    res.json({ message: "Review updated successfully", review });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 // Delete a review
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete("/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
 
   try {
     const review = await Review.findById(id);
 
     if (!review) {
-      return res.status(404).json({ message: 'Review not found' });
+      return res.status(404).json({ message: "Review not found" });
     }
 
     if (review.user.toString() !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied. You cannot delete this review.' });
+      return res
+        .status(403)
+        .json({ message: "Access denied. You cannot delete this review." });
     }
 
     await review.remove();
-    res.json({ message: 'Review deleted successfully' });
+    res.json({ message: "Review deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 // Admin route to delete any review
-router.delete('/admin/:id', authenticateToken, checkAdmin, async (req, res) => {
+router.delete("/admin/:id", authenticateToken, checkAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
     const review = await Review.findById(id);
 
     if (!review) {
-      return res.status(404).json({ message: 'Review not found' });
+      return res.status(404).json({ message: "Review not found" });
     }
 
     await review.remove();
-    res.json({ message: 'Review deleted successfully by admin' });
+    res.json({ message: "Review deleted successfully by admin" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

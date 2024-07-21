@@ -1,14 +1,45 @@
 import { switchTheme } from "../utils/slices/themeSlice";
-import { MoonIcon, SunIcon } from "lucide-react";
+import { CircleUser, LogOut, MoonIcon, SunIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../utils/slices/userApiSlice";
+import { logout } from "../utils/slices/authSlice";
+import { resetCart } from "../utils/slices/cartSlice";
+
 function Header() {
   const theme = useSelector((state) => state.themeReducer.value);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
+  const cartCount = cartItems.reduce((acc, item) => {
+    console.log(item);
+    const quantity = Number(item.qty) || 0;
+    return acc + quantity;
+  }, 0);
+  console.log(cartCount);
+
+  const [logoutApiCall] = useLogoutMutation();
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      dispatch(resetCart());
+      navigate("/signin");
+      console.log("Logged out");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <header>
-      <div className="navbar glass fixed top-0 left-0 w-full z-10">
+    <header className="px-10">
+      <div className="navbar glass fixed top-0 left-0 w-full z-10 h-[10vh]">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">Innovate</a>
+          <Link to="/" className="btn btn-ghost text-xl">
+            <img src="/logo.png" alt="Logo" className="h-8 w-auto mr-2" />
+            Innovate
+          </Link>
         </div>
         <div className="flex-none gap-5">
           <div className="form-control">
@@ -18,12 +49,22 @@ function Header() {
               className="input input-bordered w-100 "
             />
           </div>
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
+          <div className="flex gap-2">
+            <SunIcon />
+            <input
+              type="checkbox"
+              className="toggle"
+              checked={theme === "dim"}
+              onClick={() => dispatch(switchTheme())}
+            />
+            <MoonIcon />
+          </div>
+          <Link
+            to="/cart"
+            className="tooltip tooltip-bottom"
+            data-tip="My Cart"
+          >
+            <div role="button" className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -39,69 +80,47 @@ function Header() {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <span className="badge badge-sm indicator-item">8</span>
+                <span className="badge badge-sm indicator-item">
+                  {cartCount}
+                </span>
               </div>
             </div>
-            <div
-              tabIndex={0}
-              className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
-            >
-              <div className="card-body">
-                <span className="text-lg font-bold">8 Items</span>
-                <span className="text-info">Subtotal: $999</span>
-                <div className="card-actions">
-                  <button className="btn btn-primary btn-block">
-                    View cart
+          </Link>
+          {userInfo ? (
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} className="btn btn-ghost">
+                <CircleUser className="h-8 w-auto" />
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu mt-3 dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+              >
+                <li>
+                  <Link to="/profile" className="btn btn-sm btn-ghost">
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    className="btn btn-sm btn-error"
+                    onClick={logoutHandler}
+                  >
+                    <LogOut />
+                    Logout
                   </button>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div className="flex gap-2">
-            <SunIcon />
-            <input
-              type="checkbox"
-              className="toggle"
-              checked={theme === "dim"}
-              onClick={() => dispatch(switchTheme())}
-            />
-            <MoonIcon />
-          </div>
-          {/* <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Profile"
-                  src={
-                    theme === "dim" ? "./profile-black.svg" : "./profile.svg"
-                  }
-                />
-              </div>
+          ) : (
+            <div className="space-x-4">
+              <Link to="/signin" className="btn btn-ghost btn-outline">
+                Log In
+              </Link>
+              <Link to="/signup" className="btn btn-outline">
+                Sign Up
+              </Link>
             </div>
-
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
-          </div> */}
-          <button className=" btn btn-ghost btn-outline">Log In</button>
+          )}
         </div>
       </div>
     </header>

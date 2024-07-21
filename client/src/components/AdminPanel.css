@@ -1,0 +1,27 @@
+.admin-panel {
+    padding: 20px;
+  }
+  
+  .products-section, .orders-section, .reviews-section, .users-section {
+    margin-bottom: 20px;
+  }
+  
+  .products-section h2, .orders-section h2, .reviews-section h2, .users-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .products-section .chart-container, .orders-section .chart-container, .reviews-section .chart-container, .users-section .chart-container {
+    margin-top: 10px;
+  }
+  
+  .product-list ul, .order-list ul, .review-list ul, .user-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .product-list li, .order-list li, .review-list li, .user-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  

@@ -5,7 +5,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <main>
+      <main className="mt-[10vh]">
         <Outlet />
       </main>
     </>

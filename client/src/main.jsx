@@ -1,27 +1,48 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./utils/store.js";
 import App from "./App.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import CartPage from "./pages/CartPage2.jsx";
-import Board from "./pages/Board.jsx";
+import HomeScreen from "./routes/HomeScreen";
+import CartScreen from "./routes/CartScreen";
+import LeaderboardScreen from "./routes/LeaderboardScreen";
+import SignUpScreen from "./routes/SignUp/index.jsx";
+import SignInScreen from "./routes/SignIn/index.jsx";
+import ProductScreen from "./routes/ProductScreen";
 // import Contact from "./Contact.jsx";
 import "./index.css";
+import AdminPanel from "./components/AdminPanel.jsx";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route element={<App />}>
+      <Route index={true} path="/" element={<HomeScreen />} />
+      <Route path="/search/:keyword" element={<HomeScreen />} />
+      <Route path="/page/:pageNumber" element={<HomeScreen />} />
+      <Route
+        path="/search/:keyword/page/:pageNumber"
+        element={<HomeScreen />}
+      />
+      <Route path="/cart" element={<CartScreen />} />
+      <Route path="/board" element={<LeaderboardScreen />} />
+      <Route path="/signup" element={<SignUpScreen />} />
+      <Route path="/signin" element={<SignInScreen />} />
+      <Route path="/product/:id" element={<ProductScreen />} />
+      <Route path="/admin" element={<AdminPanel />} />
+    </Route>
+  )
+);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<App />}>
-            <Route path="/" index element={<HomePage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/board" element={<Board />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );

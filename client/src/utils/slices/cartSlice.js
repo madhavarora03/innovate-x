@@ -1,21 +1,9 @@
-// src/utils/slices/cartSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { updateCart } from "../updateCarts";
 
-// Load cart from localStorage or set initial state
-const localItem = localStorage.getItem("cart");
-const initialState = localItem
-  ? JSON.parse(localItem)
-  : {
-      cartItems: [],
-      shippingAddress: {
-        address: "",
-        city: "",
-        postalCode: "",
-        country: "",
-      },
-      paymentMethod: "paypal",
-    };
+const initialState = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : { cartItems: [], shippingAddress: {}, paymentMethod: "PayPal" };
 
 const cartSlice = createSlice({
   name: "cart",
@@ -23,40 +11,45 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const existItem = state.cartItems.find((x) => x.id === item.id);
+
+      const existItem = state.cartItems.find((x) => x._id === item._id);
       if (existItem) {
         state.cartItems = state.cartItems.map((x) =>
-          x.id === existItem.id ? item : x
+          x._id === existItem._id ? item : x
         );
       } else {
         state.cartItems = [...state.cartItems, item];
       }
-      updateCart(state);
+
+      return updateCart(state);
     },
     removeFromCart: (state, action) => {
-      state.cartItems = state.cartItems.filter((x) => x.id !== action.payload);
-      updateCart(state);
+      state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
+
+      return updateCart(state);
     },
     saveShippingAddress: (state, action) => {
       state.shippingAddress = action.payload;
-      updateCart(state);
+
+      return updateCart(state);
     },
+
     savePaymentMethod: (state, action) => {
       state.paymentMethod = action.payload;
-      updateCart(state);
+
+      return updateCart(state);
     },
-    clearCartItems: (state) => {
+
+    clearCartItems: (state, action) => {
       state.cartItems = [];
-      updateCart(state);
+      return updateCart(state);
     },
-    resetCart: (state) => {
-      return initialState;
-    },
+
+    resetCart: (state) => (state = initialState),
   },
 });
 
 export const {
-  cartItems,
   addToCart,
   removeFromCart,
   saveShippingAddress,
